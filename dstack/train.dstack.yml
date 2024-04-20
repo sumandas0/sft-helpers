@@ -25,6 +25,7 @@ commands:
   - git clone https://github.com/sumandas0/sft-helpers.git
   - cd sft-helpers
   - uv pip install -r requirements.txt
+  - uv pip install hf-transfer
   - pip install flash-attn --no-build-isolation
   - wandb login $WANDB_API_KEY
   - bash run_peft_fsdp.sh

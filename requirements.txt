@@ -14,3 +14,4 @@ xformers
 sentencepiece
 deepspeed
 tensorboard
+torch==2.2.2
