@@ -1,0 +1,37 @@
+type: task
+python: "3.11"
+
+env:
+  - HF_HUB_ENABLE_HF_TRANSFER=1
+  - WANDB_API_KEY=252031431d667b3933442d239a1a9a383a5a9634
+  - HUGGING_FACE_HUB_TOKEN=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
+  - MODEL_NAME=meta-llama/Meta-Llama-3-8B-Instruct
+  - DATASET_NAME=sumandas/openhermes-2.5-llama3
+  - DATASET_COLUMN_NAME=content
+  - MODEL_SFT_NAME_SAVE=llama3-openhermes-2.5
+  - DATASET_SPLIT=train,test
+  - CHAT_TEMPLATE_FORMAT=none
+  - REPORT_TO=wandb
+  - TRAIN_BATCH_SIZE=4
+  - EVAL_BATCH_SIZE=4
+  - MAX_EPOCH=3
+
+commands:
+  - apt-get update
+  - conda install cuda
+  - pip install uv
+  - git clone https://github.com/sumandas0/sft-helpers.git
+  - cd sft-helpers
+  - uv pip install -r requirements.txt
+  - wandb login $WANDB_API_KEY
+  - bash run_peft_fsdp.sh
+ports:
+  - 6006
+# Use either `python` or `image` to configure environment
+
+resources:
+  gpu:
+    name: A100
+    memory: 80GB
+    count: 4
+  disk: 1500GB

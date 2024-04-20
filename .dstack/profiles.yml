@@ -1,0 +1,7 @@
+profiles:
+  - name: poor
+    spot_policy: spot
+    max_duration: 24h
+    backends: [azure]
+
+    default: true # (Optional) Activate the profile by default

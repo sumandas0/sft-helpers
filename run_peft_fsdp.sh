@@ -1,13 +1,13 @@
 accelerate launch --config_file "configs/fsdp_config.yaml"  train.py \
 --seed 100 \
---model_name_or_path "mistralai/Mistral-7B-v0.1" \
---dataset_name "HuggingFaceH4/ultrachat_200k" \
---chat_template_format "chatml" \
+--model_name_or_path $MODEL_NAME \
+--dataset_name $DATASET_NAME \
+--chat_template_format $CHAT_TEMPLATE_FORMAT \
 --add_special_tokens False \
 --append_concat_token False \
---splits "train_sft,test_sft" \
+--splits $DATASET_SPLIT \
 --max_seq_len 2048 \
---num_train_epochs 1 \
+--num_train_epochs $MAX_EPOCH \
 --logging_steps 5 \
 --log_level "info" \
 --logging_strategy "steps" \
@@ -16,6 +16,7 @@ accelerate launch --config_file "configs/fsdp_config.yaml"  train.py \
 --push_to_hub \
 --hub_private_repo True \
 --hub_strategy "every_save" \
+--report_to $REPORT_TO \
 --bf16 True \
 --packing True \
 --learning_rate 1e-4 \
@@ -23,13 +24,13 @@ accelerate launch --config_file "configs/fsdp_config.yaml"  train.py \
 --weight_decay 1e-4 \
 --warmup_ratio 0.0 \
 --max_grad_norm 1.0 \
---output_dir "mistral-sft-lora-fsdp" \
---per_device_train_batch_size 16 \
---per_device_eval_batch_size 16 \
+--output_dir $MODEL_SFT_NAME_SAVE \
+--per_device_train_batch_size $TRAIN_BATCH_SIZE \
+--per_device_eval_batch_size $EVAL_BATCH_SIZE \
 --gradient_accumulation_steps 4 \
 --gradient_checkpointing True \
 --use_reentrant False \
---dataset_text_field "content" \
+--dataset_text_field $DATASET_COLUMN_NAME \
 --use_flash_attn True \
 --use_peft_lora True \
 --lora_r 8 \
