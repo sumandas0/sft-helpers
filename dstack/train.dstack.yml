@@ -17,8 +17,6 @@ env:
   - MAX_EPOCH=3
 
 commands:
-  - apt update
-  - apt upgrade -y
   - conda install cuda
   - pip3 install --upgrade pip
   - pip install uv
@@ -28,7 +26,7 @@ commands:
   - uv pip install hf-transfer
   - pip install flash-attn --no-build-isolation
   - wandb login $WANDB_API_KEY
-  - bash run_peft_fsdp.sh
+  - bash run_peft_deepspeed.sh
 ports:
   - 6006
 # Use either `python` or `image` to configure environment

@@ -145,7 +145,7 @@ def create_and_prepare_model(args, data_args, training_args):
             load_in_4bit=load_in_4bit,
         )
     else:
-        torch_dtype = quant_storage_stype if quant_storage_stype and quant_storage_stype.is_floating_point else torch.float32
+        torch_dtype = quant_storage_stype if quant_storage_stype and quant_storage_stype.is_floating_point else torch.bfloat16
         model = AutoModelForCausalLM.from_pretrained(
             args.model_name_or_path,
             load_in_8bit=load_in_8bit,
@@ -241,7 +241,7 @@ def loftq_init(model, tokenizer, train_dataset, max_seq_length, args):
         logits_base = base_model(**random_inputs).logits
         del base_model
         gc.collect()
-        
+
         def loftq_callback(model, module_name):
             """Callable to replace weights with LoFTQ if the mse is lower than the current best one."""
             global current_mse
@@ -253,13 +253,13 @@ def loftq_init(model, tokenizer, train_dataset, max_seq_length, args):
                 return True
             print(f"MSE did not improve for module {module_name}")
             return False
-        
+
         replace_lora_weights_loftq(model, callback=loftq_callback)
         logits_loftq_callback = model(**random_inputs).logits
         error_report(logits_base, logits_loftq_callback)
     else:
         replace_lora_weights_loftq(model)
-    
+
 
 def get_module_class_from_name(module, name):
     """
