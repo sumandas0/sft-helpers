@@ -16,6 +16,7 @@ python train.py \
 --push_to_hub \
 --hub_private_repo True \
 --hub_strategy "every_save" \
+--report_to $REPORT_TO \
 --bf16 True \
 --packing True \
 --learning_rate 1e-4 \
