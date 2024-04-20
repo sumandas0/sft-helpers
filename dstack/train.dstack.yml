@@ -17,12 +17,15 @@ env:
   - MAX_EPOCH=3
 
 commands:
-  - apt-get update
+  - apt update
+  - apt upgrade -y
   - conda install cuda
+  - pip3 install --upgrade pip
   - pip install uv
   - git clone https://github.com/sumandas0/sft-helpers.git
   - cd sft-helpers
   - uv pip install -r requirements.txt
+  - pip install flash-attn --no-build-isolation
   - wandb login $WANDB_API_KEY
   - bash run_peft_fsdp.sh
 ports:
