@@ -26,7 +26,7 @@ commands:
   - uv pip install hf-transfer
   - pip install flash-attn --no-build-isolation
   - wandb login $WANDB_API_KEY
-  - bash run_peft_deepspeed.sh
+  - bash run_peft.sh
 ports:
   - 6006
 # Use either `python` or `image` to configure environment
